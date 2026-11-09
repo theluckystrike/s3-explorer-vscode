@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22324a"/><stop offset="1" stop-color="#141c2b"/></linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#fbbf24"/></linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="44" fill="url(#bg)"/>
+  <rect x="8" y="8" width="240" height="240" rx="44" fill="none" stroke="#35496a" stroke-width="4"/>
+  <!-- bucket -->
+  <path d="M58 74 L76 196 Q78 210 128 210 Q178 210 180 196 L198 74 Z" fill="url(#b)"/>
+  <ellipse cx="128" cy="74" rx="70" ry="20" fill="#fde68a"/>
+  <ellipse cx="128" cy="74" rx="56" ry="13" fill="#b45309"/>
+  <!-- bands -->
+  <path d="M66 120 Q128 142 190 120" fill="none" stroke="#92400e" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+  <path d="M72 160 Q128 180 184 160" fill="none" stroke="#92400e" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+  <!-- magnifier -->
+  <circle cx="170" cy="168" r="30" fill="#141c2b" stroke="#e2e8f0" stroke-width="10"/>
+  <path d="M192 190 L216 214" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round"/>
+  <path d="M157 160 h26 M157 172 h18" stroke="#7dd3fc" stroke-width="6" stroke-linecap="round"/>
+</svg>

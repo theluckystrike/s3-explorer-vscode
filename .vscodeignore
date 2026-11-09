@@ -1,0 +1,10 @@
+**
+!dist/extension.js
+!media/**
+!images/screenshot-dark.png
+!walkthrough/**
+!package.json
+!README.md
+!CHANGELOG.md
+!LICENSE
+!icon.png

@@ -1,0 +1,790 @@
+{
+  "name": "zovo-s3-explorer",
+  "displayName": "S3 Explorer & S3 Client, Bucket Browser for AWS, MinIO and Cloudflare R2",
+  "description": "Free S3 client inside VS Code: browse buckets with millions of keys, open objects read-only, upload large files with resume, download, copy, move, delete (always asks first), versions, tags, presigned URLs and folder sync with a dry run. Works with AWS profiles (SSO too), MinIO, Cloudflare R2, Backblaze B2, Wasabi and DigitalOcean Spaces. No sign-in, no telemetry.",
+  "version": "0.1.0",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1B2433",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=18"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "s3",
+    "aws s3",
+    "s3 explorer",
+    "s3 browser",
+    "s3 client",
+    "s3 bucket",
+    "bucket browser",
+    "minio",
+    "cloudflare r2",
+    "r2",
+    "backblaze b2",
+    "wasabi",
+    "digitalocean spaces",
+    "object storage",
+    "presigned url",
+    "multipart upload",
+    "aws",
+    "s3 sync",
+    "aws sso",
+    "s3-compatible"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onFileSystem:s3x"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "s3Explorer.addConnection",
+        "title": "Add Connection",
+        "category": "S3 Explorer",
+        "icon": "$(add)"
+      },
+      {
+        "command": "s3Explorer.connectProfile",
+        "title": "Connect with an AWS Profile",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.editConnection",
+        "title": "Edit Connection",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.removeConnection",
+        "title": "Remove Connection",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.refresh",
+        "title": "Refresh",
+        "category": "S3 Explorer",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "s3Explorer.loadMore",
+        "title": "Load More",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.openObject",
+        "title": "Open",
+        "category": "S3 Explorer",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "s3Explorer.openPreview",
+        "title": "Open the First 1 MB (Read-only)",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.showDetails",
+        "title": "Show Details, Versions and Presigned URL",
+        "category": "S3 Explorer",
+        "icon": "$(info)"
+      },
+      {
+        "command": "s3Explorer.editAndUpload",
+        "title": "Edit and Upload...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.upload",
+        "title": "Upload Files...",
+        "category": "S3 Explorer",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "s3Explorer.uploadFolder",
+        "title": "Upload Folder...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.download",
+        "title": "Download...",
+        "category": "S3 Explorer",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "s3Explorer.delete",
+        "title": "Delete...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.rename",
+        "title": "Rename...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.copyTo",
+        "title": "Copy To...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.moveTo",
+        "title": "Move To...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.copyBetweenConnections",
+        "title": "Copy to Another Connection... (Pro)",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.copyUri",
+        "title": "Copy S3 URI",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.copyKey",
+        "title": "Copy Key",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.presign",
+        "title": "Copy Presigned URL...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.newFolder",
+        "title": "New Folder...",
+        "category": "S3 Explorer",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "s3Explorer.createBucket",
+        "title": "Create Bucket...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.addBucketByName",
+        "title": "Add Bucket by Name...",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.removePinnedBucket",
+        "title": "Remove Bucket from List",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.filterPrefix",
+        "title": "Filter by Prefix...",
+        "category": "S3 Explorer",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "s3Explorer.clearFilter",
+        "title": "Clear Filter",
+        "category": "S3 Explorer",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "s3Explorer.findByPrefix",
+        "title": "Find Key by Prefix...",
+        "category": "S3 Explorer",
+        "icon": "$(search)"
+      },
+      {
+        "command": "s3Explorer.sync",
+        "title": "Sync Folder...",
+        "category": "S3 Explorer",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "s3Explorer.syncAgain",
+        "title": "Plan a Recent Sync Again",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.stopSchedules",
+        "title": "Stop Scheduled Syncs",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.sizeReport",
+        "title": "Size and Cost Report (Pro)",
+        "category": "S3 Explorer",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "s3Explorer.resumeUpload",
+        "title": "Resume Upload",
+        "category": "S3 Explorer",
+        "icon": "$(debug-continue)"
+      },
+      {
+        "command": "s3Explorer.discardUpload",
+        "title": "Discard Upload",
+        "category": "S3 Explorer",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "s3Explorer.ssoLogin",
+        "title": "Run aws sso login",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.openWalkthrough",
+        "title": "Get Started",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.supportDeveloper",
+        "title": "Support the developer",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.moreViewers",
+        "title": "More free tools",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.unlockWithSponsors",
+        "title": "Unlock Zovo Pro with GitHub Sponsors",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.getPro",
+        "title": "Get Zovo Pro (USD 15 once, all Zovo extensions)",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.enterLicenseKey",
+        "title": "Enter Zovo Pro license key",
+        "category": "S3 Explorer"
+      },
+      {
+        "command": "s3Explorer.removeLicense",
+        "title": "Remove Zovo Pro license from this editor",
+        "category": "S3 Explorer"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "s3Explorer",
+          "title": "S3 Explorer",
+          "icon": "media/activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "s3Explorer": [
+        {
+          "id": "s3Explorer.buckets",
+          "name": "S3 Buckets",
+          "icon": "media/activity.svg",
+          "contextualTitle": "S3 Explorer"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "s3Explorer.buckets",
+        "contents": "Browse AWS S3, MinIO, Cloudflare R2, Backblaze B2, Wasabi or DigitalOcean Spaces. Keys stay in your OS keychain. Nothing connects until you pick a connection.\n[Add Connection](command:s3Explorer.addConnection)\n[Get Started](command:s3Explorer.openWalkthrough)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "s3Explorer.addConnection",
+          "when": "view == s3Explorer.buckets",
+          "group": "navigation@1"
+        },
+        {
+          "command": "s3Explorer.refresh",
+          "when": "view == s3Explorer.buckets",
+          "group": "navigation@2"
+        },
+        {
+          "command": "s3Explorer.syncAgain",
+          "when": "view == s3Explorer.buckets",
+          "group": "1_more@1"
+        },
+        {
+          "command": "s3Explorer.openWalkthrough",
+          "when": "view == s3Explorer.buckets",
+          "group": "1_more@2"
+        },
+        {
+          "command": "s3Explorer.moreViewers",
+          "when": "view == s3Explorer.buckets",
+          "group": "2_zovo@1"
+        },
+        {
+          "command": "s3Explorer.supportDeveloper",
+          "when": "view == s3Explorer.buckets",
+          "group": "2_zovo@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "s3Explorer.findByPrefix",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^bucket/",
+          "group": "inline@1"
+        },
+        {
+          "command": "s3Explorer.upload",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/",
+          "group": "inline@2"
+        },
+        {
+          "command": "s3Explorer.showDetails",
+          "when": "view == s3Explorer.buckets && viewItem == object",
+          "group": "inline@1"
+        },
+        {
+          "command": "s3Explorer.download",
+          "when": "view == s3Explorer.buckets && viewItem == object",
+          "group": "inline@2"
+        },
+        {
+          "command": "s3Explorer.resumeUpload",
+          "when": "view == s3Explorer.buckets && viewItem == upload",
+          "group": "inline@1"
+        },
+        {
+          "command": "s3Explorer.discardUpload",
+          "when": "view == s3Explorer.buckets && viewItem == upload",
+          "group": "inline@2"
+        },
+        {
+          "command": "s3Explorer.clearFilter",
+          "when": "view == s3Explorer.buckets && viewItem =~ /filtered/",
+          "group": "inline@0"
+        },
+        {
+          "command": "s3Explorer.refresh",
+          "when": "view == s3Explorer.buckets && viewItem == connection",
+          "group": "1_main@1"
+        },
+        {
+          "command": "s3Explorer.createBucket",
+          "when": "view == s3Explorer.buckets && viewItem == connection",
+          "group": "1_main@2"
+        },
+        {
+          "command": "s3Explorer.addBucketByName",
+          "when": "view == s3Explorer.buckets && viewItem == connection",
+          "group": "1_main@3"
+        },
+        {
+          "command": "s3Explorer.editConnection",
+          "when": "view == s3Explorer.buckets && viewItem == connection",
+          "group": "9_conn@1"
+        },
+        {
+          "command": "s3Explorer.removeConnection",
+          "when": "view == s3Explorer.buckets && viewItem == connection",
+          "group": "9_conn@2"
+        },
+        {
+          "command": "s3Explorer.findByPrefix",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/",
+          "group": "1_find@1"
+        },
+        {
+          "command": "s3Explorer.filterPrefix",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^bucket/",
+          "group": "1_find@2"
+        },
+        {
+          "command": "s3Explorer.clearFilter",
+          "when": "view == s3Explorer.buckets && viewItem =~ /filtered/",
+          "group": "1_find@3"
+        },
+        {
+          "command": "s3Explorer.upload",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/",
+          "group": "2_transfer@1"
+        },
+        {
+          "command": "s3Explorer.uploadFolder",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/",
+          "group": "2_transfer@2"
+        },
+        {
+          "command": "s3Explorer.download",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(object|prefix)$/",
+          "group": "2_transfer@3"
+        },
+        {
+          "command": "s3Explorer.newFolder",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/",
+          "group": "2_transfer@4"
+        },
+        {
+          "command": "s3Explorer.sync",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/",
+          "group": "3_sync@1"
+        },
+        {
+          "command": "s3Explorer.sizeReport",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/",
+          "group": "3_sync@2"
+        },
+        {
+          "command": "s3Explorer.openObject",
+          "when": "view == s3Explorer.buckets && viewItem == object",
+          "group": "0_open@1"
+        },
+        {
+          "command": "s3Explorer.openPreview",
+          "when": "view == s3Explorer.buckets && viewItem == object",
+          "group": "0_open@2"
+        },
+        {
+          "command": "s3Explorer.showDetails",
+          "when": "view == s3Explorer.buckets && viewItem == object",
+          "group": "0_open@3"
+        },
+        {
+          "command": "s3Explorer.editAndUpload",
+          "when": "view == s3Explorer.buckets && viewItem == object",
+          "group": "0_open@4"
+        },
+        {
+          "command": "s3Explorer.rename",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(object|prefix)$/",
+          "group": "4_edit@1"
+        },
+        {
+          "command": "s3Explorer.copyTo",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(object|prefix)$/",
+          "group": "4_edit@2"
+        },
+        {
+          "command": "s3Explorer.moveTo",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(object|prefix)$/",
+          "group": "4_edit@3"
+        },
+        {
+          "command": "s3Explorer.copyBetweenConnections",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(object|prefix)$/",
+          "group": "4_edit@4"
+        },
+        {
+          "command": "s3Explorer.copyUri",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/ || viewItem == object",
+          "group": "5_copy@1"
+        },
+        {
+          "command": "s3Explorer.copyKey",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(object|prefix)$/",
+          "group": "5_copy@2"
+        },
+        {
+          "command": "s3Explorer.presign",
+          "when": "view == s3Explorer.buckets && viewItem == object",
+          "group": "5_copy@3"
+        },
+        {
+          "command": "s3Explorer.delete",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(object|prefix)$/",
+          "group": "8_delete@1"
+        },
+        {
+          "command": "s3Explorer.refresh",
+          "when": "view == s3Explorer.buckets && viewItem =~ /^(bucket|prefix)/",
+          "group": "9_refresh@1"
+        },
+        {
+          "command": "s3Explorer.removePinnedBucket",
+          "when": "view == s3Explorer.buckets && viewItem =~ /pinned/",
+          "group": "9_refresh@2"
+        },
+        {
+          "command": "s3Explorer.connectProfile",
+          "when": "view == s3Explorer.buckets && viewItem == profile",
+          "group": "1_main@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "s3Explorer.loadMore",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.resumeUpload",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.discardUpload",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.ssoLogin",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.removePinnedBucket",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.clearFilter",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.openObject",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.openPreview",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.showDetails",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.editAndUpload",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.download",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.delete",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.rename",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.copyTo",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.moveTo",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.copyBetweenConnections",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.copyUri",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.copyKey",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.presign",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.newFolder",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.createBucket",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.addBucketByName",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.filterPrefix",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.findByPrefix",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.editConnection",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.removeConnection",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.upload",
+          "when": "false"
+        },
+        {
+          "command": "s3Explorer.uploadFolder",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "S3 Explorer",
+      "properties": {
+        "s3Explorer.pageSize": {
+          "type": "integer",
+          "default": 1000,
+          "minimum": 100,
+          "maximum": 1000,
+          "description": "Keys listed per page in the tree. A \"Load more\" row fetches the next page."
+        },
+        "s3Explorer.maxTextPreviewMB": {
+          "type": "number",
+          "default": 10,
+          "minimum": 1,
+          "maximum": 512,
+          "description": "Text objects larger than this ask first: show the first 1 MB (one range request) or download the whole file."
+        },
+        "s3Explorer.confirmOpenOverMB": {
+          "type": "number",
+          "default": 200,
+          "minimum": 1,
+          "description": "Binary objects larger than this ask before they are downloaded to open."
+        },
+        "s3Explorer.multipartThresholdMB": {
+          "type": "number",
+          "default": 16,
+          "minimum": 5,
+          "description": "Files at least this large upload in parts, with progress, Cancel and resume."
+        },
+        "s3Explorer.partSizeMB": {
+          "type": "number",
+          "default": 8,
+          "minimum": 5,
+          "maximum": 512,
+          "description": "Smallest part size for multipart uploads. It grows for very large files so that there are at most 10,000 parts."
+        },
+        "s3Explorer.concurrency": {
+          "type": "integer",
+          "default": 4,
+          "minimum": 1,
+          "maximum": 16,
+          "description": "Parts or files sent at the same time."
+        },
+        "s3Explorer.requestTimeoutSeconds": {
+          "type": "integer",
+          "default": 30,
+          "minimum": 3,
+          "maximum": 600,
+          "description": "How long to wait for an answer from the endpoint before showing an error."
+        },
+        "s3Explorer.syncExcludes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            ".git/**",
+            "node_modules/**",
+            ".DS_Store",
+            "Thumbs.db"
+          ],
+          "description": "Glob patterns that uploads and sync skip (** matches folders)."
+        },
+        "s3Explorer.pricePerGBMonth": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "description": "Storage price in USD per GB-month for the size report estimate. 0 uses the provider's list price (AWS S3 Standard 0.023, R2 0.015, B2 0.006, Wasabi 0.0069)."
+        },
+        "s3Explorer.showAwsProfiles": {
+          "type": "boolean",
+          "default": true,
+          "description": "List the profile names in ~/.aws/config and ~/.aws/credentials in the tree so you can connect with one click. Only names are read until you pick one."
+        },
+        "s3Explorer.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask for a Marketplace rating after 2 objects opened without an error, in 2 sessions at least 4 hours apart. \"Later\" asks once more after 7 days, \"No thanks\" never asks again. Never after an error. Nothing is sent anywhere."
+        },
+        "s3Explorer.showSupportLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the small Rate, More free tools and Sponsor links at the bottom of the details, sync and report pages. Nothing is sent anywhere."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "s3Explorer.start",
+        "title": "Get started with S3 Explorer",
+        "description": "Browse, open, upload and sync S3 buckets from VS Code.",
+        "steps": [
+          {
+            "id": "connect",
+            "title": "Add a connection",
+            "description": "Pick an AWS profile from ~/.aws (SSO profiles reuse your aws sso login), or enter an access key for AWS, Cloudflare R2, MinIO, Backblaze B2, Wasabi or DigitalOcean Spaces. Keys go to the OS keychain.\n[Add Connection](command:s3Explorer.addConnection)",
+            "media": {
+              "image": "images/screenshot-dark.png",
+              "altText": "The S3 Buckets view with a bucket open and the details of an object."
+            },
+            "completionEvents": [
+              "onCommand:s3Explorer.addConnection",
+              "onCommand:s3Explorer.connectProfile"
+            ]
+          },
+          {
+            "id": "browse",
+            "title": "Browse and open",
+            "description": "Expand a bucket. Keys load 1,000 at a time, so a bucket with millions of keys opens at once. Click an object to open it read-only; PDFs, spreadsheets, images and Parquet open in the matching viewer.",
+            "media": {
+              "markdown": "walkthrough/browse.md"
+            }
+          },
+          {
+            "id": "transfer",
+            "title": "Upload, download and edit",
+            "description": "Drag files from the Explorer onto a bucket, or right-click a folder. Large files upload in parts and can resume. Every delete and overwrite lists the keys and asks first.",
+            "media": {
+              "markdown": "walkthrough/transfer.md"
+            }
+          },
+          {
+            "id": "sync",
+            "title": "Sync a folder",
+            "description": "Right-click a bucket or folder and choose Sync Folder. You see a dry-run plan (new, changed, deleted) before anything changes.",
+            "media": {
+              "markdown": "walkthrough/sync.md"
+            },
+            "completionEvents": [
+              "onCommand:s3Explorer.sync"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node scripts/build.js --production",
+    "test": "node scripts/build.js --production && node --test --test-concurrency=1 test/*.test.js",
+    "package": "npm run build && npx -y @vscode/vsce package --no-dependencies -o dist/"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "@types/vscode": "~1.90.0"
+  },
+  "homepage": "https://github.com/theluckystrike/s3-explorer-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/theluckystrike/s3-explorer-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/s3-explorer-vscode"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike"
+  }
+}
