@@ -262,7 +262,7 @@
       },
       {
         "command": "s3Explorer.getPro",
-        "title": "Get Zovo Pro (USD 15 once, all Zovo extensions)",
+        "title": "Get Zovo Pro (USD 19 once, all Zovo extensions)",
         "category": "S3 Explorer"
       },
       {
@@ -770,7 +770,7 @@
   "scripts": {
     "build": "node scripts/build.js --production",
     "test": "node scripts/build.js --production && node --test --test-concurrency=1 test/*.test.js",
-    "package": "npm run build && npx -y @vscode/vsce package --no-dependencies -o dist/"
+    "package": "npm run build && npx -y @vscode/vsce package --no-dependencies --no-gitHubIssueLinking -o dist/"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

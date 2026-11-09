@@ -165,6 +165,8 @@ const runPhase = async (phase, out, mins) => {
 };
 const t0 = Date.now();
 const resB = await runPhase('B', path.join(work, 'results-B.json'), 6);
+// VER15: wait until every process of phase B has gone, or the phase C launch hands its window to the dying instance and exits.
+for (let i = 0; i < 30 && spawnSync('pgrep', ['-f', ud]).status === 0; i++) await sleep(1000);
 await sleep(1500);
 const resC = await runPhase('C', path.join(work, 'results.json'), 10);
 const res = Object.assign({}, resC, { files: [...resB.files, ...resC.files], checks: [...resB.checks, ...resC.checks], stepB: resB.step, stepC: resC.step });

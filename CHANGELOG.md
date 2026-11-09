@@ -11,3 +11,5 @@
 - Folder sync in both directions with a dry-run plan.
 - Zovo Pro extras with 3 free tries each: scheduled sync, copy between connections, size and cost report.
 - Rating ask v2.2, support links and related Zovo tools.
+- Zovo Pro is USD 19 once (the "$19 one time" GitHub Sponsors tier).
+

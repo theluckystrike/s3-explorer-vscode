@@ -59,7 +59,7 @@ That extension covers many AWS services; this one does S3 and S3-compatible stor
 
 Browsing, opening, editing, upload, download, copy, move, rename, delete, versions, tags, presigned URLs and folder sync are free, with no limits.
 
-Zovo Pro adds 3 extras, each with 3 free tries: scheduled sync (runs a sync again every few minutes while VS Code is open, never deletes), copy between two connections (for example AWS to R2), and the size and cost report per folder and storage class. Zovo Pro is USD 15 once on [GitHub Sponsors](https://github.com/sponsors/theluckystrike) and unlocks Pro in every Zovo VS Code extension. If you have already sponsored USD 10 or more, run "Unlock Zovo Pro with GitHub Sponsors".
+Zovo Pro adds 3 extras, each with 3 free tries: scheduled sync (runs a sync again every few minutes while VS Code is open, never deletes), copy between two connections (for example AWS to R2), and the size and cost report per folder and storage class. Zovo Pro is USD 19 once on GitHub Sponsors (the ["$19 one time" tier](https://github.com/sponsors/theluckystrike/sponsorships?tier_id=679878)) and unlocks Pro in every Zovo VS Code extension. If you bought that tier, or sponsor monthly with USD 10 or more, run "Unlock Zovo Pro with GitHub Sponsors".
 
 ## Privacy
 

@@ -17,7 +17,7 @@ const FEATURES = {
   sizeReport: { name: 'Size and cost report', detail: 'Lists every object under a prefix and shows size, object count and an estimated monthly storage cost per folder and storage class.' },
 };
 
-const PRO_TEXT = 'Zovo Pro is USD 15 once on GitHub Sponsors and unlocks Pro in every Zovo extension. Already sponsored USD 10 or more? Choose Unlock with GitHub Sponsors. Unlocking sends one question to GitHub, nothing else. Browsing, opening, upload, download, versions, presigned URLs and folder sync stay free.';
+const PRO_TEXT = 'Zovo Pro is USD 19 once on GitHub Sponsors and unlocks Pro in every Zovo extension. Bought it already, or sponsor monthly with USD 10 or more? Choose Unlock with GitHub Sponsors. Unlocking sends one question to GitHub, nothing else. Browsing, opening, upload, download, versions, presigned URLs and folder sync stay free.';
 
 function createPro({ vscode, context, license, enabled = PRO_ENABLED }) {
   const lic = license || (enabled ? createLicense({ vscode, context, sku: SKU, name: 'Zovo', commandPrefix: 's3Explorer' }) : null);
